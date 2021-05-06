@@ -1,0 +1,86 @@
+// importing pandas numpy matplotlib.pyplot //
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+
+
+//importing the .csv file to the program //
+
+ap = pd.read_csv("area_price.csv")  // ap is an object assigned by the user to call the function pd.read_csv("file_name.csv") //
+
+// print the file //
+
+ap
+
+// plot the data in a graph //
+
+%matplotlib inline
+plt.scatter(ap.Area,ap.Price) // Area and Price are as in the data sheet //
+
+// customising the graph //
+
+%matplotlib inline
+plt.xlabel('area(sqr ft)') // naming the x-axis //
+plt.ylabel('price(INR)') // naming the y-axis //
+plt.scatter(ap.Area,ap.Price, color='green' , marker = '*') 
+
+// calling for the linear regression function from the package//
+
+a = linear_model.LinearRegression()    // a is an object to call the function LinearRegression //
+a.fit(ap[['Area']],ap.Price)
+
+// predict a value // 
+
+a.predict([[3300]]) // the value is 3300 //
+
+// in linear regression the formula is y=mx+c where y is the output to predict, x is the dependent variable for which the output should be determined 
+m is the slope or coefficient of x and c is the intercept //
+
+a.coef_ // shows m //
+a.intercept_ //shows c //
+
+// to show the line of linear regression //
+
+%matplotlib inline
+plt.xlabel('area(sqr ft)')
+plt.ylabel('price(INR)')
+plt.scatter(ap.Area,ap.Price, color='green' , marker = '*')
+plt.plot(ap.Area,a.predict(ap[['Area']]),color = "blue")
+
+// the above program is just a test data and the real problem is solved below // 
+
+// to get the fie which need to be solved and print it //
+
+ar = pd.read_csv("area.csv")   // ar is the object assigned to call the fn //
+ar
+
+// predict the output //
+
+a.predict(ar) // a is the object of LinearRegression and ar is that for the new file //
+
+// to show in the form of table save this in a new variable //
+
+p = a.predict(ar)
+
+// to a column //
+
+ar['Prices'] = p  // new column name Prices //
+ar // print the table with Areas and Prices //
+
+// plot the values in a graph //
+
+%matplotlib inline
+plt.xlabel('area(sqr ft)')
+plt.ylabel('price(INR)')
+plt.scatter(ar.Areas,ar.Prices, color='green' , marker = '*')
+plt.plot(ar.Areas,a.predict(ar[['Areas']]),color = "blue")
+
+// to save the values in the file //
+
+ar.to_csv("area.csv") // ar is the object created and to_csv() is the function to save in the file //
+
+
+
+// end //
